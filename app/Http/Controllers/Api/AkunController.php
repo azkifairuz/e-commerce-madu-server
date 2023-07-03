@@ -98,6 +98,18 @@ class AkunController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $dataAkun = Akun::find($id);
+
+        if(empty($dataAkun)){
+            return response()->json([
+                'status'=>false,
+                'pesan'=>'Data Tidak Ditemukan',
+            ],404);
+        }
+        $post = $dataAkun->delete();
+        return response()->json([
+            'status'=>true,
+            'pesan'=>'Data Berhasil Dihapus',
+        ]);
     }
 }

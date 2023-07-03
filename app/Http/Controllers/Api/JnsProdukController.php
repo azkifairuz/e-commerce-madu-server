@@ -87,6 +87,18 @@ class JnsProdukController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $dataJnsProduk = JnsProduk::find($id);
+
+        if(empty($dataJnsProduk)){
+            return response()->json([
+                'status'=>false,
+                'pesan'=>'Data Tidak Ditemukan',
+            ],404);
+        }
+        $post = $dataJnsProduk->delete();
+        return response()->json([
+            'status'=>true,
+            'pesan'=>'Data Berhasil Dihapus',
+        ]);
     }
 }

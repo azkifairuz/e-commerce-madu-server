@@ -118,6 +118,18 @@ class ProdukController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $dataProduk = Produk::find($id);
+
+        if(empty($dataProduk)){
+            return response()->json([
+                'status'=>false,
+                'pesan'=>'Data Tidak Ditemukan',
+            ],404);
+        }
+        $post = $dataProduk->delete();
+        return response()->json([
+            'status'=>true,
+            'pesan'=>'Data Berhasil Dihapus',
+        ]);
     }
 }

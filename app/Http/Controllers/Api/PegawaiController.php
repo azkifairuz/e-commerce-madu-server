@@ -102,6 +102,18 @@ class PegawaiController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $dataPegawai = Pegawai::find($id);
+
+        if(empty($dataPegawai)){
+            return response()->json([
+                'status'=>false,
+                'pesan'=>'Data Tidak Ditemukan',
+            ],404);
+        }
+        $post = $dataPegawai->delete();
+        return response()->json([
+            'status'=>true,
+            'pesan'=>'Data Berhasil Dihapus',
+        ]);
     }
 }

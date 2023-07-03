@@ -103,6 +103,18 @@ class PelangganController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $dataPelanggan = Pelanggan::find($id);
+
+        if(empty($dataPelanggan)){
+            return response()->json([
+                'status'=>false,
+                'pesan'=>'Data Tidak Ditemukan',
+            ],404);
+        }
+        $post = $dataPelanggan->delete();
+        return response()->json([
+            'status'=>true,
+            'pesan'=>'Data Berhasil Dihapus',
+        ]);
     }
 }
