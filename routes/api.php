@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\Api\AkunController;
 use App\Http\Controllers\Api\JnsProdukController;
+use App\Http\Controllers\api\KeranjangBelanjaController;
 use App\Http\Controllers\Api\PegawaiController;
 use App\Http\Controllers\Api\PelangganController;
 use App\Http\Controllers\Api\ProdukController;
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -57,3 +59,26 @@ Route::get('produk/{id}',[ProdukController::class,'show']);
 Route::post('produk',[ProdukController::class,'store']);
 Route::post('produk/{id}',[ProdukController::class,'update']);
 Route::delete('produk/{id}',[ProdukController::class,'destroy']);
+
+// route keranjang belanja 
+Route::get('keranjangbelanja',[KeranjangBelanjaController::class,'index']);
+Route::get('keranjangbelanja/{id}',[KeranjangBelanjaController::class,'show']);
+Route::post('keranjangbelanja',[KeranjangBelanjaController::class,'store']);
+Route::post('keranjangbelanja/{id}',[KeranjangBelanjaController::class,'update']);
+Route::delete('keranjangbelanja/{id}',[KeranjangBelanjaController::class,'destroy']);
+
+
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'auth'
+
+], function ($router) {
+
+    Route::post('regeister', [AuthController::class,'register']);
+    Route::post('login', [AuthController::class,'login']);
+    Route::post('logout', [AuthController::class,'logout']);
+    Route::post('refresh',[AuthController::class,'refresh']);
+    Route::post('me', [AuthController::class,'me']);
+
+});
