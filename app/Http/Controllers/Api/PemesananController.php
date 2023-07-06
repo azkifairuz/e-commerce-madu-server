@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Akun;
+use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 
-class AkunController extends Controller
+class PemesananController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $data = Akun::get();
+        $data = Pemesanan::get();
         return response()->json([
             'status'=>true,
             'pesan'=>'Data ditemukan',
@@ -26,15 +26,13 @@ class AkunController extends Controller
      */
     public function store(Request $request)
     {
-        $dataAkun = new Akun();
+        $dataKeranjang = new Pemesanan();
         // insert ke sql
-        $dataAkun->id_pelanggan = $request->id_pelanggan;
-        $dataAkun->id_pegawai = $request->id_pegawai;
-        $dataAkun->username = $request->username;
-        $dataAkun->password = $request->password;
-        $dataAkun->level = $request->level;
-     
-        $post = $dataAkun->save();
+        $dataKeranjang->no_nota = $request->no_nota;
+        $dataKeranjang->id_pelanggan = $request->id_pelanggan;
+        $dataKeranjang->tgl = $request->tgl;
+            
+        $post = $dataKeranjang->save();
         return response()->json([
             'status'=>true,
             'pesan'=>'Data Berhasil Ditambahkan',
@@ -46,7 +44,7 @@ class AkunController extends Controller
      */
     public function show(string $id)
     {
-        $data = Akun::find($id);
+        $data = Pemesanan::find($id);
         if($data){
             return response()->json([
                 'status'=>true,
@@ -66,27 +64,20 @@ class AkunController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $dataAkun = Akun::find($id);
-        if(empty($dataAkun)){
+        $dataKeranjang = Pemesanan::find($id);
+        if(empty($dataKeranjang)){
             return response()->json([
                 'status'=>false,
                 'pesan'=>'Data Tidak Ditemukan',
             ],404);
         }
-        // falidasi
-        $rules=[
-            'judul' => 'required',
-            'pengarang' => 'required',
-            'tanggal_publikasi' => 'required|date',
-        ];
+   
         // insert ke sql
-        $dataAkun->id_pelanggan = $request->id_pelanggan;
-        $dataAkun->id_pegawai = $request->id_pegawai;
-        $dataAkun->username = $request->username;
-        $dataAkun->password = $request->password;
-        $dataAkun->level = $request->level;
-     
-        $post = $dataAkun->save();
+        $dataKeranjang->no_nota = $request->no_nota;
+        $dataKeranjang->id_pelanggan = $request->id_pelanggan;
+        $dataKeranjang->tgl = $request->tgl;
+            
+        $post = $dataKeranjang->save();
         return response()->json([
             'status'=>true,
             'pesan'=>'Data Berhasil Ditambahkan',
@@ -98,15 +89,15 @@ class AkunController extends Controller
      */
     public function destroy(string $id)
     {
-        $dataAkun = Akun::find($id);
+        $dataKeranjang = Pemesanan::find($id);
 
-        if(empty($dataAkun)){
+        if(empty($dataKeranjang)){
             return response()->json([
                 'status'=>false,
                 'pesan'=>'Data Tidak Ditemukan',
             ],404);
         }
-        $post = $dataAkun->delete();
+        $post = $dataKeranjang->delete();
         return response()->json([
             'status'=>true,
             'pesan'=>'Data Berhasil Dihapus',

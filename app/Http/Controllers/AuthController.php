@@ -10,22 +10,23 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
+        $this->middleware('auth:api', ['except' => ['login']]);
+        // $this->middleware('auth:api', ['except' => ['login','register']]);
     }
 
-    public function register()
-    {
-        $user = User::create([
-            'name'=>request('name'),
-            'email'=>request('email'),
-            'password'=> Hash::make(request('password')),
-        ]);
-        if($user){
-            return response()->json(['message' => 'Successfully Akun Create']);
-        }else{
-            return response()->json(['message' => 'Akun Gagal Dibuat']);
-        }
-    }
+    // public function register()
+    // {
+    //     $user = User::create([
+    //         'name'=>request('name'),
+    //         'email'=>request('email'),
+    //         'password'=> Hash::make(request('password')),
+    //     ]);
+    //     if($user){
+    //         return response()->json(['message' => 'Successfully Akun Create']);
+    //     }else{
+    //         return response()->json(['message' => 'Akun Gagal Dibuat']);
+    //     }
+    // }
 
     public function login()
     {

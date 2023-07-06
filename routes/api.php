@@ -1,11 +1,14 @@
 <?php
 
-use App\Http\Controllers\Api\AkunController;
+use App\Http\Controllers\api\DetailKeranjangBelanjaController;
+use App\Http\Controllers\api\DetailPemesananController;
 use App\Http\Controllers\Api\JnsProdukController;
 use App\Http\Controllers\api\KeranjangBelanjaController;
 use App\Http\Controllers\Api\PegawaiController;
 use App\Http\Controllers\Api\PelangganController;
+use App\Http\Controllers\api\PemesananController;
 use App\Http\Controllers\Api\ProdukController;
+use App\Http\Controllers\api\UserCotroller;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -25,12 +28,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//
+Route::post('register',[UserCotroller::class,'store']);
+Route::get('user',[UserCotroller::class,'index']);
+Route::put('user/{id}',[UserCotroller::class,'update']);
+Route::get('user/{id}',[UserCotroller::class,'show']);
+
 // route akun
-Route::get('akun',[AkunController::class,'index']);
-Route::get('akun/{id}',[AkunController::class,'show']);
-Route::post('akun',[AkunController::class,'store']);
-Route::put('akun/{id}',[AkunController::class,'update']);
-Route::delete('akun/{id}',[AkunController::class,'destroy']);
+// Route::get('akun',[AkunController::class,'index']);
+// Route::get('akun/{id}',[AkunController::class,'show']);
+// Route::post('akun',[AkunController::class,'store']);
+// Route::put('akun/{id}',[AkunController::class,'update']);
+// Route::delete('akun/{id}',[AkunController::class,'destroy']);
 
 //  route pegawai
 Route::get('pegawai',[PegawaiController::class,'index']);
@@ -67,11 +76,32 @@ Route::post('keranjangbelanja',[KeranjangBelanjaController::class,'store']);
 Route::post('keranjangbelanja/{id}',[KeranjangBelanjaController::class,'update']);
 Route::delete('keranjangbelanja/{id}',[KeranjangBelanjaController::class,'destroy']);
 
+// route detail keranjang belanja 
+Route::get('detailkeranjangbelanja',[DetailKeranjangBelanjaController::class,'index']);
+Route::get('detailkeranjangbelanja/{id}',[DetailKeranjangBelanjaController::class,'show']);
+Route::post('detailkeranjangbelanja',[DetailKeranjangBelanjaController::class,'store']);
+Route::post('detailkeranjangbelanja/{id}',[DetailKeranjangBelanjaController::class,'update']);
+Route::delete('detailkeranjangbelanja/{id}',[DetailKeranjangBelanjaController::class,'destroy']);
+
+// route pemesanan 
+Route::get('pemesanan',[PemesananController::class,'index']);
+Route::get('pemesanan/{id}',[PemesananController::class,'show']);
+Route::post('pemesanan',[PemesananController::class,'store']);
+Route::post('pemesanan/{id}',[PemesananController::class,'update']);
+Route::delete('pemesanan/{id}',[PemesananController::class,'destroy']);
+
+// route pemesanan 
+Route::get('detailpemesanan',[DetailPemesananController::class,'index']);
+Route::get('detailpemesanan/{id}',[DetailPemesananController::class,'show']);
+Route::post('detailpemesanan',[DetailPemesananController::class,'store']);
+Route::post('detailpemesanan/{id}',[DetailPemesananController::class,'update']);
+Route::delete('detailpemesanan/{id}',[DetailPemesananController::class,'destroy']);
+
 
 Route::group([
 
     'middleware' => 'api',
-    'prefix' => 'auth'
+    'prefix' => 'auth',
 
 ], function ($router) {
 

@@ -40,6 +40,7 @@ class ProdukController extends Controller
         $dataProduk->qty_produk = $request->qty_produk;
         $dataProduk->harga_jual = $request->harga_jual;
         $dataProduk->harga_beli = $request->harga_beli;
+        $dataProduk->keterangan = $request->keterangan;
         $dataProduk->image = $image->hashName();
         
         $post = $dataProduk->save();
@@ -95,6 +96,7 @@ class ProdukController extends Controller
             $dataProduk->qty_produk = $request->qty_produk;
             $dataProduk->harga_jual = $request->harga_jual;
             $dataProduk->harga_beli = $request->harga_beli;
+            $dataProduk->keterangan = $request->keterangan;
             $dataProduk->image = $image->hashName();
             $post = $dataProduk->save();
         } else {
@@ -104,6 +106,7 @@ class ProdukController extends Controller
             $dataProduk->qty_produk = $request->qty_produk;
             $dataProduk->harga_jual = $request->harga_jual;
             $dataProduk->harga_beli = $request->harga_beli;
+            $dataProduk->keterangan = $request->keterangan;
             $post = $dataProduk->save();
       
         }
