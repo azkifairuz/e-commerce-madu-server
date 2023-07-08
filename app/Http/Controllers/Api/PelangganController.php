@@ -16,6 +16,9 @@ class PelangganController extends Controller
         $data = Pelanggan::join('akun', 'pelanggan.id','=','akun.id_pelanggan')
         ->select('pelanggan.*', 'akun.username', 'akun.password','akun.level')
         ->get();
+        // $data = Pelanggan::get();
+        
+        
         return response()->json([
             'status'=>true,
             'pesan'=>'Data ditemukan',
@@ -40,9 +43,11 @@ class PelangganController extends Controller
         $dataPelanggan->no_telp = $request->no_telp;
             
         $post = $dataPelanggan->save();
+        $lastId = $dataPelanggan->id;
         return response()->json([
             'status'=>true,
             'pesan'=>'Data Berhasil Ditambahkan',
+            'lastId'=>$lastId,
         ]);
     }
 

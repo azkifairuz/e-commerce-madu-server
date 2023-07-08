@@ -40,9 +40,11 @@ class PegawaiController extends Controller
         $dataPegawai->no_telp = $request->no_telp;
             
         $post = $dataPegawai->save();
+        $lastId = $dataPegawai->id;
         return response()->json([
             'status'=>true,
             'pesan'=>'Data Berhasil Ditambahkan',
+            'lastId'=>$lastId,
         ]);
     }
 
