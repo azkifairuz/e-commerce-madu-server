@@ -13,6 +13,9 @@ class KeranjangBelanjaController extends Controller
      */
     public function index()
     {
+        $data = KeranjangBelanja::join('pelanggan', 'keranjang_belanja.id_pelanggan', '=', 'pelanggan.id')
+        ->select('keranjang_belanja n.*','pelanggan.*')
+        ->get();
         $data = KeranjangBelanja::get();
         return response()->json([
             'status'=>true,

@@ -67,6 +67,20 @@ class ProdukController extends Controller
         ],200);
     }
 
+    public function showByKat(string $id)
+    {
+        // $data = Produk::find($id);
+        $data = Produk::join('jns_produk', 'produk.id_jns_produk', '=', 'jns_produk.id')
+        ->select('produk.*','jns_produk.nm_jns_produk','jns_produk.ket_jns_produk')
+        ->where('jns_produk.id',$id)
+        ->first();
+        return response()->json([
+            'status'=>true,
+            'pesan'=>'Data ditemukan',
+            'data'=>$data,
+        ],200);
+    }
+
     /**
      * Update the specified resource in storage.
      */

@@ -65,6 +65,7 @@ Route::delete('jnsproduk/{id}',[JnsProdukController::class,'destroy']);
 // route produk
 Route::get('produk',[ProdukController::class,'index']);
 Route::get('produk/{id}',[ProdukController::class,'show']);
+Route::get('produk/{id}',[ProdukController::class,'showByKat']);
 Route::post('produk',[ProdukController::class,'store']);
 Route::post('produk/{id}',[ProdukController::class,'update']);
 Route::delete('produk/{id}',[ProdukController::class,'destroy']);
