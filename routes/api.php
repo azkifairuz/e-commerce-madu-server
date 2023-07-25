@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\PegawaiController;
 use App\Http\Controllers\Api\PelangganController;
 use App\Http\Controllers\api\PemesananController;
 use App\Http\Controllers\Api\ProdukController;
+use App\Http\Controllers\Api\KatProdukController;
 use App\Http\Controllers\api\UserCotroller;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
@@ -65,10 +66,13 @@ Route::delete('jnsproduk/{id}',[JnsProdukController::class,'destroy']);
 // route produk
 Route::get('produk',[ProdukController::class,'index']);
 Route::get('produk/{id}',[ProdukController::class,'show']);
-Route::get('produk/{id}',[ProdukController::class,'showByKat']);
 Route::post('produk',[ProdukController::class,'store']);
 Route::post('produk/{id}',[ProdukController::class,'update']);
 Route::delete('produk/{id}',[ProdukController::class,'destroy']);
+
+// kategori produk
+Route::get('katproduk/{id}',[KatProdukController::class,'show']);
+
 
 // route keranjang belanja 
 Route::get('keranjangbelanja',[KeranjangBelanjaController::class,'index']);

@@ -57,9 +57,9 @@ class ProdukController extends Controller
     {
         // $data = Produk::find($id);
         $data = Produk::join('jns_produk', 'produk.id_jns_produk', '=', 'jns_produk.id')
-        ->select('produk.*','jns_produk.nm_jns_produk','jns_produk.ket_jns_produk')
         ->where('produk.id',$id)
-        ->first();
+        ->select('produk.*','jns_produk.nm_jns_produk','jns_produk.ket_jns_produk')
+        ->get();
         return response()->json([
             'status'=>true,
             'pesan'=>'Data ditemukan',
