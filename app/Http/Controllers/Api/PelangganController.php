@@ -13,8 +13,8 @@ class PelangganController extends Controller
      */
     public function index()
     {
-        $data = Pelanggan::join('akun', 'pelanggan.id','=','akun.id_pelanggan')
-        ->select('pelanggan.*', 'akun.username', 'akun.password','akun.level')
+        $data = Pelanggan::join('users', 'pelanggan.id','=','users.id_pelanggan')
+        ->select('pelanggan.*', 'users.username', 'users.password','users.level')
         ->get();
         // $data = Pelanggan::get();
         
@@ -56,8 +56,8 @@ class PelangganController extends Controller
      */
     public function show(string $id)
     {
-        $data = Pelanggan::join('akun', 'pelanggan.id','=','akun.id_pelanggan')
-        ->select('pelanggan.*', 'akun.username', 'akun.password','akun.level')
+        $data = Pelanggan::join('users', 'pelanggan.id','=','users.id_pelanggan')
+        ->select('pelanggan.*', 'users.username', 'users.password','users.level')
         ->find($id);
         if($data){
             return response()->json([

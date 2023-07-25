@@ -13,8 +13,8 @@ class PegawaiController extends Controller
      */
     public function index()
     {
-        $data = Pegawai::join('akun', 'pegawai.id','=','akun.id_pegawai')
-        ->select('pegawai.*', 'akun.username', 'akun.password','akun.level')
+        $data = Pegawai::join('users', 'pegawai.id','=','users.id_pegawai')
+        ->select('pegawai.*', 'users.name', 'users.password','users.level')
         ->get();
         return response()->json([
             'status'=>true,
@@ -53,8 +53,9 @@ class PegawaiController extends Controller
      */
     public function show(string $id)
     {
-        $data = Pegawai::join('akun', 'pegawai.id','=','akun.id_pegawai')
-        ->select('pegawai.*', 'akun.username', 'akun.password','akun.level')->find($id);
+        $data = Pegawai::join('users', 'pegawai.id','=','users.id_pegawai')
+        ->select('pegawai.*', 'users.name', 'users.password','users.level')
+        ->find($id);
         if($data){
             return response()->json([
                 'status'=>true,
