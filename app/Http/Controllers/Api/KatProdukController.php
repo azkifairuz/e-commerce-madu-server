@@ -33,9 +33,10 @@ class KatProdukController extends Controller
     {
         // $data = Produk::find($id);
         $data = Produk::join('jns_produk', 'produk.id_jns_produk', '=', 'jns_produk.id')
-        ->where('produk.id_jns_produk',$id)
+        ->where('jns_produk.id',$id)
         ->select('produk.*','jns_produk.nm_jns_produk','jns_produk.ket_jns_produk')
-        ->first();
+        ->get();
+        // ->first();
         return response()->json([
             'status'=>true,
             'pesan'=>'Data ditemukan',

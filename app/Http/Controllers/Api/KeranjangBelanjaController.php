@@ -35,9 +35,11 @@ class KeranjangBelanjaController extends Controller
         $dataKeranjang->tgl = $request->tgl;
             
         $post = $dataKeranjang->save();
+        $lastId = $dataKeranjang->id;
         return response()->json([
             'status'=>true,
             'pesan'=>'Data Berhasil Ditambahkan',
+            'lastId' => $lastId,
         ]);
     }
 

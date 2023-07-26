@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\PelangganController;
 use App\Http\Controllers\api\PemesananController;
 use App\Http\Controllers\Api\ProdukController;
 use App\Http\Controllers\Api\KatProdukController;
+use App\Http\Controllers\api\KeranjangUserController;
 use App\Http\Controllers\api\UserCotroller;
 use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
@@ -87,6 +88,11 @@ Route::get('detailkeranjangbelanja/{id}',[DetailKeranjangBelanjaController::clas
 Route::post('detailkeranjangbelanja',[DetailKeranjangBelanjaController::class,'store']);
 Route::post('detailkeranjangbelanja/{id}',[DetailKeranjangBelanjaController::class,'update']);
 Route::delete('detailkeranjangbelanja/{id}',[DetailKeranjangBelanjaController::class,'destroy']);
+
+// keranjang belanja user
+Route::get('keranjang',[KeranjangUserController::class,'index']);
+Route::get('keranjang/{id}',[KeranjangUserController::class,'show']);
+
 
 // route pemesanan 
 Route::get('pemesanan',[PemesananController::class,'index']);
