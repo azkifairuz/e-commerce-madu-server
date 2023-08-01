@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pemesanan', function (Blueprint $table) {
             $table->id();
-            $table->integer('no_nota');
+            $table->string('no_nota',50);
             $table->integer('id_pelanggan');
             $table->date('tgl');
             $table->timestamps();

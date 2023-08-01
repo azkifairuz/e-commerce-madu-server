@@ -14,7 +14,7 @@ class PelangganController extends Controller
     public function index()
     {
         $data = Pelanggan::join('users', 'pelanggan.id','=','users.id_pelanggan')
-        ->select('pelanggan.*', 'users.username', 'users.password','users.level')
+        ->select('pelanggan.*', 'users.password','users.level')
         ->get();
         // $data = Pelanggan::get();
         

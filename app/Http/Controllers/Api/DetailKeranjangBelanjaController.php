@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\DetailKeranjangBelanja;
+use App\Models\KeranjangBelanja;
 use Illuminate\Http\Request;
 
 class DetailKeranjangBelanjaController extends Controller

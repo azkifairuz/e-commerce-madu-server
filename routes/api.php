@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\API\BayarController;
+use App\Http\Controllers\API\ChackOutController;
 use App\Http\Controllers\api\DetailKeranjangBelanjaController;
 use App\Http\Controllers\api\DetailPemesananController;
 use App\Http\Controllers\Api\JnsProdukController;
@@ -92,6 +94,12 @@ Route::delete('detailkeranjangbelanja/{id}',[DetailKeranjangBelanjaController::c
 // keranjang belanja user
 Route::get('keranjang',[KeranjangUserController::class,'index']);
 Route::get('keranjang/{id}',[KeranjangUserController::class,'show']);
+
+// route bayar Belanja
+Route::get('bayar/{id}',[BayarController::class,'store']);
+
+// route chackout Belanja
+Route::get('chackout/{id}',[ChackOutController::class,'show']);
 
 
 // route pemesanan 
