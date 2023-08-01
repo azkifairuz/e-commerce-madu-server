@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('detail_pemesanan', function (Blueprint $table) {
             $table->id();
             $table->integer('id_pemesanan');
-            $table->integer('no_nota');
+            $table->string('no_nota',50);
             $table->integer('id_pelanggan');
             $table->integer('id_produk');
             $table->integer('qty');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\DetailKeranjangBelanja;
 use App\Models\DetailPemesanan;
 use App\Models\KeranjangBelanja;
 use App\Models\Pemesanan;
@@ -34,7 +35,7 @@ class ChackOutController extends Controller
         $dataPemesanan = KeranjangBelanja::where('id_pelanggan',$id)
         ->select('id as no_nota', 'id_pelanggan', 'tgl' )
         ->first();
-    
+        $id_keranajang_belanja = $dataPemesanan->no_nota;
         $noNota = "user-0000".$dataPemesanan->no_nota;
         $pemesanan = new Pemesanan();
         // insert ke sql pemesanan
@@ -61,7 +62,8 @@ class ChackOutController extends Controller
             $detailPemesanan->save();
         }
         //buat hapus
-
+        $delDetKeranjang = DetailKeranjangBelanja::where('id_keranjang_belanja', '=', $id_keranajang_belanja)->delete();
+        $delKeranajang = KeranjangBelanja::where('id', '=', $id_keranajang_belanja)->delete();
         return response()->json([
             'data'=>$noNota,
             'pesan'=>'Data berhasil di simpan',
