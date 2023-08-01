@@ -15,7 +15,7 @@ class KeranjangUserController extends Controller
     {
         $data = KeranjangBelanja:: join('detail_keranjang_belanja', 'detail_keranjang_belanja.id_keranjang_belanja','=','keranjang_belanja.id')
         ->join('produk', 'detail_keranjang_belanja.id_produk','=','produk.id')
-        ->select('detail_keranjang_belanja.id as idDetKeranjang', 'keranjang_belanja.id as idKeranjang', 'keranjang_belanja.id_pelanggan', 'keranjang_belanja.tgl', 'detail_keranjang_belanja.id_pelanggan', 'detail_keranjang_belanja.id_produk', 'produk.nm_produk', 'detail_keranjang_belanja.qty', 'detail_keranjang_belanja.harga' )
+        ->select('detail_keranjang_belanja.id as idDetKeranjang', 'keranjang_belanja.id as idKeranjang', 'keranjang_belanja.id_pelanggan', 'keranjang_belanja.tgl', 'detail_keranjang_belanja.id_pelanggan', 'detail_keranjang_belanja.id_produk', 'produk.nm_produk', 'detail_keranjang_belanja.qty', 'detail_keranjang_belanja.harga')
         ->get();
         return response()->json([
             'status'=>true,
@@ -40,7 +40,7 @@ class KeranjangUserController extends Controller
         $data = KeranjangBelanja:: join('detail_keranjang_belanja', 'detail_keranjang_belanja.id_keranjang_belanja','=','keranjang_belanja.id')
         ->join('produk', 'detail_keranjang_belanja.id_produk','=','produk.id')
         ->where('keranjang_belanja.id_pelanggan',$id)
-        ->select('detail_keranjang_belanja.id as idDetKeranjang', 'keranjang_belanja.id as idKeranjang', 'keranjang_belanja.id_pelanggan', 'keranjang_belanja.tgl', 'detail_keranjang_belanja.id_pelanggan', 'detail_keranjang_belanja.id_produk', 'produk.nm_produk', 'detail_keranjang_belanja.qty', 'detail_keranjang_belanja.harga' )
+        ->select('detail_keranjang_belanja.id as idDetKeranjang', 'keranjang_belanja.id as idKeranjang', 'keranjang_belanja.id_pelanggan', 'keranjang_belanja.tgl', 'detail_keranjang_belanja.id_pelanggan', 'detail_keranjang_belanja.id_produk', 'produk.nm_produk', 'detail_keranjang_belanja.qty', 'detail_keranjang_belanja.harga','produk.image')
         ->get();
 
         return response()->json([
