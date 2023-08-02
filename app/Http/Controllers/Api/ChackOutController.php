@@ -64,7 +64,7 @@ class ChackOutController extends Controller
         }
         // tambah status pemesanan
         $status = new StatusBelanja();
-        $status->id_keranjang_belanja = $lastId;
+        $status->id_pemesanan = $lastId;
         $status->keterangan = "menunggu pembayaran";
         $status->save();
 
@@ -73,6 +73,8 @@ class ChackOutController extends Controller
         $delKeranajang = KeranjangBelanja::where('id', '=', $id_keranajang_belanja)->delete();
         return response()->json([
             'lastId'=>$lastId,
+            'noNota'=>$noNota,
+            'status'=>true,
             'pesan'=>'Data berhasil di simpan',
         ], 200);
     }

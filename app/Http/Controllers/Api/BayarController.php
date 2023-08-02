@@ -23,27 +23,14 @@ class BayarController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(string $id)
-    {
-        $dataPemesanan = KeranjangBelanja::where('id_pelanggan',$id)
-        ->select('id as no_nota', 'id_pelanggan', 'tgl' )
-        ->first();
-
-        $noNota = "user-0000".$dataPemesanan->no_nota;
-        // $pemesanan = new Pemesanan();
-        // // insert ke sql pemesanan
-        // $pemesanan->no_nota = $$noNota;
-        // $pemesanan->id_pelanggan = $dataPemesanan->id_pelanggan;
-        // $pemesanan->tgl = $dataPemesanan->tgl;            
-        // $pemesanan->save();
-        // $lastId = $pemesanan->id;
-        
-        $dataBarang = KeranjangBelanja:: join('detail_keranjang_belanja', 'detail_keranjang_belanja.id_keranjang_belanja','=','keranjang_belanja.id')
-        ->join('produk', 'detail_keranjang_belanja.id_produk','=','produk.id')
-        ->where('keranjang_belanja.id_pelanggan',$id)
-        ->select('detail_keranjang_belanja.id as idDetKeranjang', 'keranjang_belanja.id as idKeranjang', 'keranjang_belanja.id_pelanggan', 'keranjang_belanja.tgl', 'detail_keranjang_belanja.id_pelanggan', 'detail_keranjang_belanja.id_produk', 'produk.nm_produk', 'detail_keranjang_belanja.qty', 'detail_keranjang_belanja.harga' )
+    {        
+        $data = Pemesanan::join('detail_pemesanan', 'pemesanan.id', '=', 'detail_pemesanan.id_pemesanan')
+        ->join('status_belanjas', 'pemesanan.id', '=', 'status_belanjas.id_pemesanan')
+        ->where('pemesanan.no_nota',$id)
+        ->select('status_belanjas.id_pemesanan', 'status_belanjas.keterangan', 'pemesanan.no_nota', 'pemesanan.id_pelanggan', 'pemesanan.tgl', 'detail_pemesanan.id_produk', 'detail_pemesanan.qty', 'detail_pemesanan.harga')
         ->get();
         $totalTagihan=0;
-        foreach ($dataBarang as $item) {
+        foreach ($data as $item) {
         //     $detailPemesanan = new DetailPemesanan();
         //     $detailPemesanan->id_pemesanan = $lastId;
         //     $detailPemesanan->no_nota = $item->idKeranjang;
@@ -53,8 +40,9 @@ class BayarController extends Controller
         //     $detailPemesanan->harga = $item->harga;
         //     $detailPemesanan->save();
             $totalTagihan = ($item->harga * $item->qty)+$totalTagihan;
+            $idPelanggan = $item->id_pelanggan; 
         }
-        $dataPelanggan = Pelanggan::find($id);
+        $dataPelanggan = Pelanggan::find($idPelanggan);
 
 
         // Set your Merchant Server Key
@@ -68,7 +56,7 @@ class BayarController extends Controller
 
         $params = array(
             'transaction_details' => array(
-                'order_id' => $noNota,
+                'order_id' => $id,
                 'gross_amount' => $totalTagihan,
             ),
             'customer_details' => array(

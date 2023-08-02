@@ -4,6 +4,7 @@ use App\Http\Controllers\API\BayarController;
 use App\Http\Controllers\API\ChackOutController;
 use App\Http\Controllers\api\DetailKeranjangBelanjaController;
 use App\Http\Controllers\api\DetailPemesananController;
+use App\Http\Controllers\API\InvoiceController;
 use App\Http\Controllers\Api\JnsProdukController;
 use App\Http\Controllers\api\KeranjangBelanjaController;
 use App\Http\Controllers\Api\PegawaiController;
@@ -100,6 +101,8 @@ Route::get('bayar/{id}',[BayarController::class,'store']);
 
 // route chackout Belanja
 Route::get('chackout/{id}',[ChackOutController::class,'show']);
+Route::get('invoice/{id}',[InvoiceController::class,'show']);
+Route::get('invoice/',[InvoiceController::class,'index']);
 
 
 // route pemesanan 
