@@ -7,6 +7,7 @@ use App\Models\DetailKeranjangBelanja;
 use App\Models\DetailPemesanan;
 use App\Models\KeranjangBelanja;
 use App\Models\Pemesanan;
+use App\Models\StatusBelanja;
 use Illuminate\Http\Request;
 
 class ChackOutController extends Controller
@@ -61,11 +62,17 @@ class ChackOutController extends Controller
             $detailPemesanan->harga = $item->harga;
             $detailPemesanan->save();
         }
-        //buat hapus
+        // tambah status pemesanan
+        $status = new StatusBelanja();
+        $status->id_keranjang_belanja = $lastId;
+        $status->keterangan = "menunggu pembayaran";
+        $status->save();
+
+        //buat hapus keranjang belanja
         $delDetKeranjang = DetailKeranjangBelanja::where('id_keranjang_belanja', '=', $id_keranajang_belanja)->delete();
         $delKeranajang = KeranjangBelanja::where('id', '=', $id_keranajang_belanja)->delete();
         return response()->json([
-            'data'=>$noNota,
+            'lastId'=>$lastId,
             'pesan'=>'Data berhasil di simpan',
         ], 200);
     }

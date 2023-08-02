@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('status_belanjas', function (Blueprint $table) {
             $table->id();
-            $table->integer('id_keranjang_belanja');
+            $table->string('id_pemesanan',50);
             $table->text('keterangan');
             $table->timestamps();
         });
