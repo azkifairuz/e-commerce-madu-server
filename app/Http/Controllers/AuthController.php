@@ -31,11 +31,19 @@ class AuthController extends Controller
     public function login()
     {
         $credentials = request(['email', 'password']);
-
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        $user = User::where('email', $credentials['email'])->first();
+        $token = auth()->attempt($credentials);
+        // if (! $token = auth()->attempt($credentials)) {
+        //     return response()->json(['error' => 'Unauthorized'], 401);
+        // }
+        if (!$user) {
+            return response()->json(['error' => 'Account not found'], 404);
         }
-
+        
+        if (!Hash::check($credentials['password'], $user->password)) {
+            return response()->json(['error' => 'Invalid password'], 401);
+        }
+        
         return $this->respondWithToken($token);
     }
 

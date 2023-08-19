@@ -7,6 +7,7 @@ use App\Models\DetailPemesanan;
 use App\Models\KeranjangBelanja;
 use App\Models\Pelanggan;
 use App\Models\Pemesanan;
+use App\Models\StatusBelanja;
 use Illuminate\Http\Request;
 
 class BayarController extends Controller
@@ -23,24 +24,24 @@ class BayarController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(string $id)
-    {        
+    {
         $data = Pemesanan::join('detail_pemesanan', 'pemesanan.id', '=', 'detail_pemesanan.id_pemesanan')
-        ->join('status_belanjas', 'pemesanan.id', '=', 'status_belanjas.id_pemesanan')
-        ->where('pemesanan.no_nota',$id)
-        ->select('status_belanjas.id_pemesanan', 'status_belanjas.keterangan', 'pemesanan.no_nota', 'pemesanan.id_pelanggan', 'pemesanan.tgl', 'detail_pemesanan.id_produk', 'detail_pemesanan.qty', 'detail_pemesanan.harga')
-        ->get();
-        $totalTagihan=0;
+            ->join('status_belanjas', 'pemesanan.id', '=', 'status_belanjas.id_pemesanan')
+            ->where('pemesanan.no_nota', $id)
+            ->select('status_belanjas.id_pemesanan', 'status_belanjas.keterangan', 'pemesanan.no_nota', 'pemesanan.id_pelanggan', 'pemesanan.tgl', 'detail_pemesanan.id_produk', 'detail_pemesanan.qty', 'detail_pemesanan.harga')
+            ->get();
+        $totalTagihan = 0;
         foreach ($data as $item) {
-        //     $detailPemesanan = new DetailPemesanan();
-        //     $detailPemesanan->id_pemesanan = $lastId;
-        //     $detailPemesanan->no_nota = $item->idKeranjang;
-        //     $detailPemesanan->id_pelanggan = $item->id_pelanggan;
-        //     $detailPemesanan->id_produk = $item->id_produk;
-        //     $detailPemesanan->qty = $item->qty;
-        //     $detailPemesanan->harga = $item->harga;
-        //     $detailPemesanan->save();
-            $totalTagihan = ($item->harga * $item->qty)+$totalTagihan;
-            $idPelanggan = $item->id_pelanggan; 
+            //     $detailPemesanan = new DetailPemesanan();
+            //     $detailPemesanan->id_pemesanan = $lastId;
+            //     $detailPemesanan->no_nota = $item->idKeranjang;
+            //     $detailPemesanan->id_pelanggan = $item->id_pelanggan;
+            //     $detailPemesanan->id_produk = $item->id_produk;
+            //     $detailPemesanan->qty = $item->qty;
+            //     $detailPemesanan->harga = $item->harga;
+            //     $detailPemesanan->save();
+            $totalTagihan = ($item->harga * $item->qty) + $totalTagihan;
+            $idPelanggan = $item->id_pelanggan;
         }
         $dataPelanggan = Pelanggan::find($idPelanggan);
 
@@ -70,8 +71,9 @@ class BayarController extends Controller
         $snapToken = \Midtrans\Snap::getSnapToken($params);
 
         return response()->json([
-            'data'=>$snapToken,
-            'pesan'=>'Data berhasil di simpan',
+            'data' => $snapToken,
+            'pesan' => 'Data berhasil di simpan',
+            "redirect_url" => "https://app.sandbox.midtrans.com/snap/v2/vtweb/$snapToken"
         ], 200);
 
         // if($data){
@@ -99,9 +101,27 @@ class BayarController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+            if ($request->transaction_status == 'capture') {
+                $orderId = Pemesanan::join('status_belanjas', 'pemesanan.id', '=', 'status_belanjas.id_pemesanan')
+                    ->where('pemesanan.no_nota', $request->order_id)
+                    ->select('status_belanjas.id')
+                    ->first();
+                    var_dump($orderId->id);
+                $order = StatusBelanja::find($orderId->id);
+                $order->update(['keterangan' => 'Sudah Dibayar']);
+                $order->save();
+                return response()->json([
+                    'status'=>true,
+                    'pesan'=>'Data Berhasil Ditambahkan',
+                    'order'=> $order
+                ]);
+            }
+        return response()->json([
+            'status'=>false,
+            'pesan'=>'transaksi gagal',
+        ]);
     }
 
     /**
@@ -111,4 +131,5 @@ class BayarController extends Controller
     {
         //
     }
+
 }

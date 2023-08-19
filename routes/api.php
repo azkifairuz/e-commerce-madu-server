@@ -98,7 +98,7 @@ Route::get('keranjang/{id}',[KeranjangUserController::class,'show']);
 
 // route bayar Belanja
 Route::get('bayar/{id}',[BayarController::class,'store']);
-
+Route::post('midtrans-callback',[BayarController::class,'update']);
 // route chackout Belanja
 Route::get('chackout/{id}',[ChackOutController::class,'show']);
 Route::get('invoice/{id}',[InvoiceController::class,'show']);
