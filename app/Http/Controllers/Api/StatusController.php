@@ -79,14 +79,15 @@ class StatusController extends Controller
 
         //update post with new image
         $status->id_pemesanan = $request->id_pemesanan;
-        $status->keterangan = "$request->keterangan";
-        $status->image = $request->image;
+        $status->keterangan = $request->keterangan;
+        $status->image = $image->hashName();
         $post = $status->save();
         } else {
         //update post without image
+        $image = $request->file('image');
         $status->id_pemesanan = $request->id_pemesanan;
-        $status->keterangan = "$request->keterangan";
-        $status->image = $request->image;
+        $status->keterangan = $request->keterangan;
+        $status->image = $image->hashName();
         $post = $status->save();
 
         }
