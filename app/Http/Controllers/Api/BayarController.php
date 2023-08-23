@@ -108,7 +108,7 @@ class BayarController extends Controller
                     ->where('pemesanan.no_nota', $request->order_id)
                     ->select('status_belanjas.id')
                     ->first();
-                    var_dump($orderId->id);
+                    // var_dump($orderId->id);
                 $order = StatusBelanja::find($orderId->id);
                 $order->update(['keterangan' => 'Sudah Dibayar']);
                 $order->save();

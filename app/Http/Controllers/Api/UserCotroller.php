@@ -92,11 +92,11 @@ class UserCotroller extends Controller
             ],404);
         }
         // falidasi
-        $rules=[
-            'judul' => 'required',
-            'pengarang' => 'required',
-            'tanggal_publikasi' => 'required|date',
-        ];
+        // $rules=[
+        //     'judul' => 'required',
+        //     'pengarang' => 'required',
+        //     'tanggal_publikasi' => 'required|date',
+        // ];
         // insert ke sql
         $dataAkun->id_pelanggan = $request->id_pelanggan;
         $dataAkun->id_pegawai = $request->id_pegawai;

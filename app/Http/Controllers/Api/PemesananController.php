@@ -14,7 +14,8 @@ class PemesananController extends Controller
     public function index()
     {
         $data = Pemesanan::join('pelanggan', 'pemesanan.id_pelanggan', '=', 'pelanggan.id')
-        ->select('pemesanan.*','pelanggan.*')
+        ->join('status_belanjas', 'status_belanjas.id_pemesanan', '=', 'pemesanan.id')
+        ->select('pemesanan.*','pelanggan.*','status_belanjas.*')
         ->get();
         return response()->json([
             'status'=>true,

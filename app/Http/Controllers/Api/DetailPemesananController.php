@@ -4,6 +4,7 @@ namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use App\Models\DetailPemesanan;
+use App\Models\Pemesanan;
 use Illuminate\Http\Request;
 
 class DetailPemesananController extends Controller
@@ -47,7 +48,19 @@ class DetailPemesananController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
+        $data = Pemesanan::join('detail_pemesanan', 'pemesanan.id', '=', 'detail_pemesanan.id_pemesanan')
+        ->join('status_belanjas', 'pemesanan.id', '=', 'status_belanjas.id_pemesanan')
+        ->join('produk', 'detail_pemesanan.id_produk', '=', 'produk.id')
+        ->join('pelanggan', 'pemesanan.id_pelanggan', '=', 'pelanggan.id')
+        ->where('pemesanan.no_nota',$id)
+        ->select('status_belanjas.id_pemesanan', 'status_belanjas.keterangan', 'pemesanan.no_nota', 'pemesanan.id_pelanggan', 'pemesanan.tgl', 'detail_pemesanan.id_produk', 'detail_pemesanan.qty', 'detail_pemesanan.harga','produk.nm_produk', 'pelanggan.alamat_pelanggan', 'pelanggan.no_telp', 'pelanggan.email','produk.image')
+        ->get();
+        return response()->json([
+            'status'=>true,
+            'pesan'=>'Data ditemukan',
+            'data'=>$data,
+        ],200);
     }
 
     /**
